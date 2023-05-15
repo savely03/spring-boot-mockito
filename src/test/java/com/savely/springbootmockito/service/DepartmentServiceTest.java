@@ -26,14 +26,14 @@ class DepartmentServiceTest {
     private EmployeeService employeeService;
 
     @InjectMocks
-    private DepartmentServiceImpl departmentService;
+    private DepartmentServiceImpl out;
 
     private final List<Employee> employees = List.of(EMPLOYEE_1_DEP_1, EMPLOYEE_2_DEP_1, EMPLOYEE_1_DEP_2, EMPLOYEE_2_DEP_2);
 
     @Test
     void checkInvalidDepartmentTest() {
         assertThatExceptionOfType(IncorrectDepartmentException.class).isThrownBy(
-                () -> departmentService.checkDepartment(INVALID_DEP)
+                () -> out.checkDepartment(INVALID_DEP)
         );
     }
 
@@ -41,7 +41,7 @@ class DepartmentServiceTest {
     void findEmployeesByFirstDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        List<Employee> employees = departmentService.findEmployeesByDepartment(FIRST_DEP);
+        List<Employee> employees = out.findEmployeesByDepartment(FIRST_DEP);
 
         assertThat(employees).hasSize(2).containsOnly(EMPLOYEE_1_DEP_1, EMPLOYEE_2_DEP_1);
     }
@@ -50,7 +50,7 @@ class DepartmentServiceTest {
     void findEmployeesBySecondDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        List<Employee> employees = departmentService.findEmployeesByDepartment(SECOND_DEP);
+        List<Employee> employees = out.findEmployeesByDepartment(SECOND_DEP);
 
         assertThat(employees).hasSize(2).containsOnly(EMPLOYEE_1_DEP_2, EMPLOYEE_2_DEP_2);
     }
@@ -59,14 +59,14 @@ class DepartmentServiceTest {
     void calculateSumSalariesByFirstDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.calculateSumSalariesByDepartment(FIRST_DEP)).isEqualTo(SUM_SALARIES_DEP_1);
+        assertThat(out.calculateSumSalariesByDepartment(FIRST_DEP)).isEqualTo(SUM_SALARIES_DEP_1);
     }
 
     @Test
     void calculateSumSalariesBySecondDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.calculateSumSalariesByDepartment(SECOND_DEP)).isEqualTo(SUM_SALARIES_DEP_2);
+        assertThat(out.calculateSumSalariesByDepartment(SECOND_DEP)).isEqualTo(SUM_SALARIES_DEP_2);
     }
 
 
@@ -74,35 +74,35 @@ class DepartmentServiceTest {
     void calculateSumSalariesWhenDepartmentIsEmptyTest() {
         when(employeeService.findAllEmployees()).thenReturn(Collections.emptyList());
 
-        assertThat(departmentService.calculateSumSalariesByDepartment(FIRST_DEP)).isEqualTo(0);
+        assertThat(out.calculateSumSalariesByDepartment(FIRST_DEP)).isEqualTo(0);
     }
 
     @Test
     void getMaxSalaryByFirstDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.getMaxSalaryByDepartment(FIRST_DEP)).isEqualTo(MAX_SALARY_DEP_1);
+        assertThat(out.getMaxSalaryByDepartment(FIRST_DEP)).isEqualTo(MAX_SALARY_DEP_1);
     }
 
     @Test
     void getMaxSalaryBySecondDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.getMaxSalaryByDepartment(SECOND_DEP)).isEqualTo(MAX_SALARY_DEP_2);
+        assertThat(out.getMaxSalaryByDepartment(SECOND_DEP)).isEqualTo(MAX_SALARY_DEP_2);
     }
 
     @Test
     void getMinSalaryByFirstDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.getMinSalaryByDepartment(FIRST_DEP)).isEqualTo(MIN_SALARY_DEP_1);
+        assertThat(out.getMinSalaryByDepartment(FIRST_DEP)).isEqualTo(MIN_SALARY_DEP_1);
     }
 
     @Test
     void getMinSalaryBySecondDepartmentTest() {
         when(employeeService.findAllEmployees()).thenReturn(employees);
 
-        assertThat(departmentService.getMinSalaryByDepartment(SECOND_DEP)).isEqualTo(MIN_SALARY_DEP_2);
+        assertThat(out.getMinSalaryByDepartment(SECOND_DEP)).isEqualTo(MIN_SALARY_DEP_2);
     }
 
     @Test
@@ -114,7 +114,7 @@ class DepartmentServiceTest {
                 SECOND_DEP, List.of(EMPLOYEE_1_DEP_2, EMPLOYEE_2_DEP_2)
         );
 
-        assertThat(departmentService.getEmployeesGroupByDepartments()).hasSize(2).isEqualTo(expected);
+        assertThat(out.getEmployeesGroupByDepartments()).hasSize(2).isEqualTo(expected);
     }
 
 }
